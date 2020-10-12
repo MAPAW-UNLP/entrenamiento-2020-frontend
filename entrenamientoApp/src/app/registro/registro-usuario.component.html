@@ -1,0 +1,54 @@
+<!--
+    Se requieren como mínimo los datos de:
+     nombre, email, usuario y clave.
+-->
+<form (ngSubmit)="guardar(usuarioForm)" #usuarioForm="ngForm" class="text-center" ngNativeValidate>
+    <mat-card class="">
+        <mat-card-header>
+            <mat-card-title>Registro</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <table class="" cellspacing="0">
+            <tr>
+                <td><mat-form-field >
+                <mat-label>Nombre completo</mat-label>
+                <input matInput required name="nombre" ngModel />
+                </mat-form-field></td>
+            </tr>
+            <tr>
+                <td><mat-form-field >
+                    <mat-label>Nombre de Usuario</mat-label>
+                    <input matInput required name="nombreUsuario" ngModel />
+                </mat-form-field></td>
+
+                <td><mat-form-field >
+                    <mat-label>Contraseña</mat-label>
+                    <input  matInput [type]="hide ? 'password' : 'text'" required name="contrasenia" minlength="6" ngModel />
+                    <button mat-icon-button type="button" matSuffix (click)="hide = !hide" >
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                </mat-form-field></td>
+            </tr>
+            <tr>
+                <td><mat-form-field >
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="example@mail.com" required name="email" ngModel #email="ngModel"/>
+                    <mat-error *ngIf="email.invalid">Email incorrecto</mat-error>
+                </mat-form-field></td>
+
+                <td><mat-form-field >
+                    <mat-label>Teléfono</mat-label>
+                    <input matInput type="number" minlength="8" maxlength="10" min="0" max="9999999999" required name="telefono" ngModel #telefono="ngModel" />
+                    <mat-hint>Incluir código de área</mat-hint>
+                    <mat-error *ngIf="telefono.hasError('required')">Se requiere un número de contacto</mat-error>
+                    <mat-error *ngIf="telefono.hasError('minlength')">Se requiere una serie de 8 números mínimo</mat-error>
+                </mat-form-field></td>
+            </tr>
+            </table>
+            <mat-card-actions>
+                <button mat-raised-button (click)="regresar()">Cancelar</button>
+            <button mat-raised-button type="submit" color="primary">Guardar</button>
+            </mat-card-actions>
+        </mat-card-content>
+    </mat-card>
+</form>
