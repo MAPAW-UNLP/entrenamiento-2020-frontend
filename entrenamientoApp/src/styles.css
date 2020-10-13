@@ -2,3 +2,85 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.mat-toolbar{
+    background-color: black;
+    color: white;
+}
+
+.centrado{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding:20px 5px;
+}
+
+.centrado .mat-card{
+    opacity: 0.8;
+    background: black;
+    color: white;
+}
+
+.mat-form-field-label { /*change color of underline when focused*/ 
+    color: white !important;
+}
+.mat-form-field-underline{
+    background-color:white !important;
+}
+
+.fondo_ppal{
+    background-image: url("assets/imagenes/fondo2.jpg");
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position:center center;
+    background-size: 100% 100%;
+}
+.fondo_ppal {
+    position: relative;
+   
+    overflow: hidden;
+}
+.fondo_ppal form {
+    padding: 50px;
+    position: relative;
+    z-index: 2;
+}
+
+#fila{
+    width: 95%;
+    padding-left: 10px;
+}
+
+.mat-card table tr td {
+    padding: 10px;
+}
+
+.boton-form{
+    background-color: grey;
+    color: white;
+}
+
+.mat-toolbar #info{
+    background-color: white;
+    color: black;
+}
+
+#centrar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/*navegador Mozilla*/
+input[type=number]{
+    -moz-appearance: textfield;
+    appearance: textfield;
+    margin: 0;
+}
+/*navegador Chrome*/
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+      -webkit-appearance: none; 
+      margin: 0; 
+}
+

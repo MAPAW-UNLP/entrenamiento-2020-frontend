@@ -2,53 +2,78 @@
     Se requieren como mínimo los datos de:
      nombre, email, usuario y clave.
 -->
-<form (ngSubmit)="guardar(usuarioForm)" #usuarioForm="ngForm" class="text-center" ngNativeValidate>
-    <mat-card class="">
-        <mat-card-header>
-            <mat-card-title>Registro</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <table class="" cellspacing="0">
-            <tr>
-                <td><mat-form-field >
-                <mat-label>Nombre completo</mat-label>
-                <input matInput required name="nombre" ngModel />
-                </mat-form-field></td>
-            </tr>
-            <tr>
-                <td><mat-form-field >
-                    <mat-label>Nombre de Usuario</mat-label>
-                    <input matInput required name="nombreUsuario" ngModel />
-                </mat-form-field></td>
+<mat-toolbar>
+    <mat-toolbar-row>
+        <span>ATRAS</span>
+    </mat-toolbar-row>
+    <mat-toolbar-row id="info">
+        <h4>SEPAV > Registro</h4>
+    </mat-toolbar-row>
+</mat-toolbar>
 
-                <td><mat-form-field >
-                    <mat-label>Contraseña</mat-label>
-                    <input  matInput [type]="hide ? 'password' : 'text'" required name="contrasenia" minlength="6" ngModel />
-                    <button mat-icon-button type="button" matSuffix (click)="hide = !hide" >
-                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                        </button>
-                </mat-form-field></td>
-            </tr>
-            <tr>
-                <td><mat-form-field >
-                    <mat-label>Email</mat-label>
-                    <input matInput placeholder="example@mail.com" required name="email" ngModel #email="ngModel"/>
-                    <mat-error *ngIf="email.invalid">Email incorrecto</mat-error>
-                </mat-form-field></td>
-
-                <td><mat-form-field >
-                    <mat-label>Teléfono</mat-label>
-                    <input matInput type="number" minlength="8" maxlength="10" min="0" max="9999999999" required name="telefono" ngModel #telefono="ngModel" />
-                    <mat-hint>Incluir código de área</mat-hint>
-                    <mat-error *ngIf="telefono.hasError('required')">Se requiere un número de contacto</mat-error>
-                    <mat-error *ngIf="telefono.hasError('minlength')">Se requiere una serie de 8 números mínimo</mat-error>
-                </mat-form-field></td>
-            </tr>
-            </table>
-            <mat-card-actions>
-                <button mat-raised-button (click)="regresar()">Cancelar</button>
-            <button mat-raised-button type="submit" color="primary">Guardar</button>
-            </mat-card-actions>
-        </mat-card-content>
-    </mat-card>
-</form>
+<div class="fondo_ppal">
+    <form (ngSubmit)="guardar(usuarioForm)" #usuarioForm="ngForm" class="text-center centrado" ngNativeValidate>
+        <mat-card class="">
+            <!--mat-card-header>
+                <mat-card-title>Registro</mat-card-title>
+            </mat-card-header-->
+            <mat-card-content>
+                <mat-form-field id="fila">
+                    <mat-label>Nombre completo</mat-label>
+                    <input matInput required name="nombre" ngModel />
+                </mat-form-field>
+                <table cellspacing="0">
+                <tr>
+                    <td><mat-form-field >
+                        <mat-label>Especialidad</mat-label>
+                        <input matInput name="especialidad" ngModel />
+                        </mat-form-field></td>
+                    <td><mat-form-field >
+                        <mat-label>DNI</mat-label>
+                        <input matInput type="number" class="contador" name="dni" minlength="8" maxlength="8" min="0" ngModel />
+                        <!--mat-hint>Puede ser nro. de cédula, pasaporte o DNI.</mat-hint-->
+                        </mat-form-field></td>
+                </tr>
+                <tr>
+                    <td><mat-form-field >
+                        <mat-label>Nombre de Usuario</mat-label>
+                        <input matInput required name="usuario" ngModel />
+                        </mat-form-field></td>
+                    <td><mat-form-field >
+                        <mat-label>Contraseña</mat-label>
+                        <input  matInput type="password" required name="clave" minlength="6" ngModel />
+    
+                        <!--input  matInput [type]="hide ? 'password' : 'text'" required name="contrasenia" minlength="6" ngModel />
+                        <button mat-icon-button type="button" matSuffix (click)="hide = !hide" >
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button-->
+                    </mat-form-field></td>
+                </tr>
+                <tr>
+                    <td><mat-form-field >
+                        <mat-label>Email</mat-label>
+                        <input matInput type="email" required name="email" ngModel />
+                        <!--mat-error *ngIf="email.invalid">Email incorrecto</mat-error-->
+                    </mat-form-field></td>
+    
+                    <td><mat-form-field >
+                        <mat-label>Teléfono</mat-label>
+                        <input matInput type="number" minlength="8" maxlength="10" min="0" max="9999999999" name="telefono" ngModel />
+                        <!--mat-hint>Incluir código de área</mat-hint-->
+                        <!--mat-error *ngIf="telefono.hasError('required')">Se requiere un número de contacto</mat-error>
+                        <mat-error *ngIf="telefono.hasError('minlength')">Se requiere una serie de 8 números mínimo</mat-error-->
+                    </mat-form-field></td>
+                </tr>
+                </table>
+                <mat-card-actions id="centrar">
+                    <!--button mat-raised-button (click)="regresar()">Cancelar</button-->
+                    <button mat-raised-button type="submit" class="boton-form">Registrar</button>
+                </mat-card-actions>
+            </mat-card-content>
+        </mat-card>
+    </form>
+</div>
+<br>
+<footer>
+    <mat-toolbar></mat-toolbar>
+</footer>
