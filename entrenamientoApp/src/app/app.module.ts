@@ -11,12 +11,16 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 //componentes
 import {StyleFormSharedModule} from './style-form-shared/style-form-shared.module';
 import { RegistroUsuarioComponent } from './registro/registro-usuario.component';
+import { HeaderComponent } from './header/header.component';
 
+//modules
+import {PlanModule} from './planes/plan.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RegistroUsuarioComponent
+    RegistroUsuarioComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -24,9 +28,13 @@ import { RegistroUsuarioComponent } from './registro/registro-usuario.component'
     BrowserAnimationsModule,
 
     StyleFormSharedModule,
-    MatToolbarModule
+    MatToolbarModule,
+    
+    PlanModule
   ],
-  exports: [MatToolbarModule],  //verificar
+  exports: [
+    MatToolbarModule
+  ],  //verificar
   providers: [],
   bootstrap: [AppComponent]
 })
