@@ -1,0 +1,6 @@
+.mat-form-field-label { /*change color of underline when focused*/ 
+    color: white !important;
+}
+.mat-form-field-underline{
+    background-color:white !important;
+}

@@ -4,8 +4,10 @@ import { Routes, RouterModule } from '@angular/router';
 
 //componentes
 import { AltaPlanComponent } from './alta-plan/alta-plan.component';
+//estilos
 import { StyleFormSharedModule } from '../style-form-shared/style-form-shared.module';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatStepperModule} from '@angular/material/stepper'; 
 
 const routes: Routes = [
   {path: 'planes/alta-plan', component: AltaPlanComponent}
@@ -19,7 +21,8 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     StyleFormSharedModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatStepperModule
   ],
   exports:[
     RouterModule

@@ -6,6 +6,6 @@ export class Usuario {
     public clave: string;
     public telefono: number;
     public email: string;
-    
-    constructor(){}
+      
+    constructor(...args: []) { this.id = args['id']; this.nombre = args['nombre']; }
 }

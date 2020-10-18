@@ -22,12 +22,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     color: white;
 }
 
-.mat-form-field-label { /*change color of underline when focused*/ 
-    color: white !important;
-}
-.mat-form-field-underline{
-    background-color:white !important;
-}
 
 .fondo_ppal{
     background-image: url("assets/imagenes/fondo2.jpg");
@@ -86,4 +80,12 @@ input[type=number]::-webkit-outer-spin-button {
 
 .example-spacer {
     flex: 1 1 auto;
+}
+
+.textarea{
+    height: 130px;
+}
+
+.mat-stepper-horizontal {
+    margin-top: 8px;
   }

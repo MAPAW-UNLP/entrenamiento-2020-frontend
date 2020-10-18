@@ -5,7 +5,7 @@ export class EjercicioEnPlan {
     public cant_series: number;
     public dificultad: string; 
     public equipamiento: string;
-    public tipoDeEjercicio_ID: number;//TipoDeEjercicio;
+    public tipoDeEjercicio_id: number;//TipoDeEjercicio;
 
     constructor(){}
 }

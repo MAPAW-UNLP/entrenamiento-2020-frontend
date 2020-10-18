@@ -6,7 +6,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 //estilo para inputs
 import { MatInputModule } from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card'; 
-import {MatSelect, MatSelectModule} from '@angular/material/select';
+import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio'; 
 //estilo para botones
