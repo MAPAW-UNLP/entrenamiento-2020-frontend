@@ -16,15 +16,18 @@
     </mat-toolbar-row>
 </mat-toolbar>
 
-<mat-horizontal-stepper linear #stepper>
-  <mat-step [stepControl]="alumnoFormGroup" [editable]="isEditable">
-    <form [formGroup]="alumnoFormGroup">
-      <ng-template matStepLabel>Asignar un alumno/a</ng-template>
-      
-      <mat-form-field>
-        <mat-label>Seleccione un alumno de la lista</mat-label>
-        <mat-select formControlName="alumno_id" required>
-            <mat-option *ngFor="let alumno of alumnos" [value]="alumno.id">{{alumno.nombre}}</mat-option>
+<form  [formGroup]="formPlan" (ngSubmit)="guardarDatos()">
+
+  <mat-horizontal-stepper linear #stepper>
+    <mat-step [stepControl]="alumnoFormGroup" [editable]="isEditable">
+      <form [formGroup]="alumnoFormGroup">
+         
+     <ng-template matStepLabel>Asignar un alumno/a</ng-template>
+     
+     <mat-form-field>
+       <mat-label>Seleccione un alumno de la lista</mat-label>
+       <mat-select formControlName="alumno_id" required>
+         <mat-option *ngFor="let alumno of alumnos" [value]="alumno.id">{{alumno.nombre}}</mat-option>
         </mat-select>
       </mat-form-field>
       <br>
@@ -39,9 +42,14 @@
       </div>
     </form>
   </mat-step>
-  <mat-step [stepControl]="sesionFormGroup" [editable]="isEditable" *ngFor="let i of getSesiones()">
+  
+  <mat-step [stepControl]="sesion" [editable]="isEditable" *ngFor="let sesion of misSesiones.controls; let j = index">
+    <form [formGroup]="sesion">
+  
+  <!-- <mat-step [stepControl]="sesionFormGroup" [editable]="isEditable" *ngFor="let i of getSesiones()">
     <form [formGroup]="sesionFormGroup">
-      <ng-template matStepLabel>Definir sesion #{{i}}</ng-template>
+   -->    
+   <ng-template matStepLabel>Definir sesion #{{i}}</ng-template>
       <mat-form-field>
         <mat-label>Nombre</mat-label>
         <input matInput formControlName="nombre" placeholder="Por ejemplo, un día de la semana." required>
@@ -53,16 +61,20 @@
         </textarea>
       </mat-form-field>
       <br>
-      <div *ngFor='let i of bloques'>
-        <mat-form-field>
+
+      <div *ngFor='let bloque of bloquesFormGroup.controls; let i = index'>
+        <h5 class="card-title">Bloque {{i + 1}}</h5>
+        <div [formGroup]="bloque" class="form-row">
+          <mat-form-field>
             <mat-label>Nombre</mat-label>
-            <input matInput formControlName="nombreBloque{{i}}" placeholder="Por ejemplo, Bloque Fuerza-Resistencia." required>
-        </mat-form-field>
+            <input matInput formControlName="nombre" placeholder="Por ejemplo, Bloque Fuerza-Resistencia." required>
+          </mat-form-field>
+        </div>        
       </div>
       <button mat-stroked-button (click)="addBloque()">Nuevo bloque</button>    
       <div>
         <button mat-button matStepperPrevious>Atrás</button>
-        <button mat-button matStepperNext (click)="getBloquesInfo()">Siguiente</button>
+        <button mat-button matStepperNext (click)="verSesion(i)">Siguiente</button>
       </div>
     </form>
   </mat-step>
@@ -71,7 +83,9 @@
     <p>You are now done.</p>
     <div>
       <button mat-button matStepperPrevious>Atrás</button>
-      <button mat-button (click)="guardar()">Finalizar</button>
+      <button mat-button type="submit">Finalizar</button>
     </div>
   </mat-step>
 </mat-horizontal-stepper>
+
+</form>
