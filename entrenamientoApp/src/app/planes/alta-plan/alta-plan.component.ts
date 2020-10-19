@@ -54,19 +54,19 @@ export class AltaPlanComponent implements OnInit {
       ejerciciosEnPlan: new FormArray([])
     }));
 
-    this.sesionesForm.push(this._formBuilder.group({
+    this.misSesiones.push(this._formBuilder.group({
       nombre: ['', Validators.required],
       descripcion: ['', Validators.required],
       bloques: new FormArray([])
     }));
-    this.sesionesForm.push(this._formBuilder.group({
+    this.misSesiones.push(this._formBuilder.group({
       nombre: ['', Validators.required],
       descripcion: ['', Validators.required],
       bloques: new FormArray([])
     }));
-      
+    
     this.formPlan.push(this.alumnoFormGroup);
-    this.formPlan.push(this.sesionesForm);
+    //this.formPlan.push(this.sesionesForm);
   }
 
   get sesionForm() { return this.sesionFormGroup.controls; }
@@ -74,20 +74,52 @@ export class AltaPlanComponent implements OnInit {
 
   get misSesiones() { return this.sesionesForm as FormArray;}
 
-  getSesiones(): any{
+  actualizarSesiones(){
     if(this.alumnoFormGroup.value['alumno_id'] != '')
       if(this.alumnos.find(alu => alu.id === this.alumnoFormGroup.value['alumno_id']).categoria_plan > 2){
-        this.sesionesForm.push(this._formBuilder.group({
+        this.misSesiones.push(this._formBuilder.group({
+          nombre: ['', Validators.required],
+          descripcion: ['', Validators.required],
+          bloques: new FormArray([])
+        }));
+      }
+    console.log('sesiones totales: '+ this.misSesiones.length);
+  }
+
+  verSesionesActuales(): any{
+    //(click)="actualizarSesiones()
+    if(this.alumnoFormGroup.value['alumno_id'] != '')
+      if(this.alumnos.find(alu => alu.id === this.alumnoFormGroup.value['alumno_id']).categoria_plan > 2){
+        this.misSesiones.push(this._formBuilder.group({
+          nombre: ['', Validators.required],
+          descripcion: ['', Validators.required],
+          bloques: new FormArray([])
+        }));
+      }
+    console.log('sesiones totales: '+ this.misSesiones.length);
+    return this.misSesiones.controls;
+  }
+
+  getCantSesiones(): any{
+    if(this.alumnoFormGroup.value['alumno_id'] != '')
+      if(this.alumnos.find(alu => alu.id === this.alumnoFormGroup.value['alumno_id']).categoria_plan > 2){
+        this.misSesiones.push(this._formBuilder.group({
           nombre: ['', Validators.required],
           descripcion: ['', Validators.required],
           bloques: new FormArray([])
         }));
         
-        console.log('sesiones form len plan3: '+this.sesionesForm.length);
+        //console.log('sesiones form len plan3: '+);
         return [1 , 2, 3];
       }
-    console.log('sesiones form len plan2: '+this.sesionesForm.length);
+    console.log('sesiones form len plan2: '+this.misSesiones.controls.values.length);
     return [1, 2];
+  }
+
+  getSesionForm(nro): any {
+    console.log('se pide la sesion nro: '+nro);
+    console.log(' con campos:'+JSON.stringify((this.misSesiones.controls[nro - 1].value)));
+    return this.misSesiones.controls[nro - 1];
   }
 
   verInfoSesion(nro){

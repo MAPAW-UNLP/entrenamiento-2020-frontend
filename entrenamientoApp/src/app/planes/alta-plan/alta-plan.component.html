@@ -38,18 +38,19 @@
       </mat-form-field>
       <br>
       <div>
-        <button mat-button matStepperNext>Siguiente</button>
+        <button mat-button matStepperNext >Siguiente</button>
       </div>
     </form>
   </mat-step>
   
-  <mat-step [stepControl]="sesion" [editable]="isEditable" *ngFor="let sesion of misSesiones.controls; let j = index">
+  <mat-step [stepControl]="sesion" [editable]="isEditable" *ngFor="let sesion of verSesionesActuales(); let nro = index">
+    <!--mat-step [stepControl]="sesion" [editable]="isEditable" *ngFor="let sesion of misSesiones.controls; let j = index"-->
     <form [formGroup]="sesion">
   
   <!-- <mat-step [stepControl]="sesionFormGroup" [editable]="isEditable" *ngFor="let i of getSesiones()">
-    <form [formGroup]="sesionFormGroup">
-   -->    
-   <ng-template matStepLabel>Definir sesion #{{i}}</ng-template>
+        <form [formGroup]="sesionFormGroup">
+        -->    
+   <ng-template matStepLabel>Definir sesion #{{nro + 1}}</ng-template>
       <mat-form-field>
         <mat-label>Nombre</mat-label>
         <input matInput formControlName="nombre" placeholder="Por ejemplo, un día de la semana." required>
