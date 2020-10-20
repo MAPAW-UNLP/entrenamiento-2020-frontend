@@ -16,11 +16,11 @@
     </mat-toolbar-row>
 </mat-toolbar>
 
-<form  [formGroup]="formPlan" (ngSubmit)="guardarDatos()">
+<form  [formGroup]="planFormGroup" (ngSubmit)="guardarDatos()">
 
   <mat-horizontal-stepper linear #stepper>
-    <mat-step [stepControl]="alumnoFormGroup" [editable]="isEditable">
-      <form [formGroup]="alumnoFormGroup">
+    <mat-step [stepControl]="planFormGroup" [editable]="isEditable">
+      <form [formGroup]="planFormGroup">
          
      <ng-template matStepLabel>Asignar un alumno/a</ng-template>
      
@@ -43,14 +43,14 @@
     </form>
   </mat-step>
   
-  <mat-step [stepControl]="sesion" [editable]="isEditable" *ngFor="let sesion of verSesionesActuales(); let nro = index">
+
     <!--mat-step [stepControl]="sesion" [editable]="isEditable" *ngFor="let sesion of misSesiones.controls; let j = index"-->
-    <form [formGroup]="sesion">
-  
   <!-- <mat-step [stepControl]="sesionFormGroup" [editable]="isEditable" *ngFor="let i of getSesiones()">
         <form [formGroup]="sesionFormGroup">
-        -->    
-   <ng-template matStepLabel>Definir sesion #{{nro + 1}}</ng-template>
+        -->  
+  <mat-step [stepControl]="planFormGroup" [editable]="isEditable" *ngFor="let sesion of ver(); let nroSesion = index">
+    <form [formGroup]="sesion">
+      <ng-template matStepLabel>Definir sesion #{{nroSesion}}</ng-template>
       <mat-form-field>
         <mat-label>Nombre</mat-label>
         <input matInput formControlName="nombre" placeholder="Por ejemplo, un día de la semana." required>
@@ -63,7 +63,7 @@
       </mat-form-field>
       <br>
 
-      <div *ngFor='let bloque of bloquesFormGroup.controls; let i = index'>
+      <!--div *ngFor='let bloque of bloquesFormGroup.controls; let i = index'>
         <h5 class="card-title">Bloque {{i + 1}}</h5>
         <div [formGroup]="bloque" class="form-row">
           <mat-form-field>
@@ -71,14 +71,15 @@
             <input matInput formControlName="nombre" placeholder="Por ejemplo, Bloque Fuerza-Resistencia." required>
           </mat-form-field>
         </div>        
-      </div>
-      <button mat-stroked-button (click)="addBloque()">Nuevo bloque</button>    
+      </div-->
+      <!--button mat-stroked-button (click)="addBloque()">Nuevo bloque</button-->    
       <div>
         <button mat-button matStepperPrevious>Atrás</button>
-        <button mat-button matStepperNext (click)="verSesion(i)">Siguiente</button>
+        <button mat-button matStepperNext>Siguiente</button>
       </div>
     </form>
   </mat-step>
+
   <mat-step>
     <ng-template matStepLabel>Finalizar plan</ng-template>
     <p>You are now done.</p>

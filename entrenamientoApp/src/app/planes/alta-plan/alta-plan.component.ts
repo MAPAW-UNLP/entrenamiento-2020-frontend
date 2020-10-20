@@ -21,108 +21,160 @@ const ALUMNOS_DATA: Alumno[] = [
 })
 export class AltaPlanComponent implements OnInit {
 
-  alumnoFormGroup: FormGroup;
+  planFormGroup: FormGroup;
   sesionFormGroup: FormGroup;
   isEditable = true;  //permite retroceder la edicion anterior
 
   alumnos = ALUMNOS_DATA;
   bloques = [1];
   cant_bloques = 1;
-  sesiones: Sesion[] = [];
-  sesionesForm = new FormArray([]);
+  //sesiones: Sesion[] = [];
+  ////sesionesForm = new FormArray([]);
 
-  formPlan = new FormArray([]);
+  ////formPlan = new FormArray([]);
+  cant = 0;
 
-  constructor(private _formBuilder: FormBuilder) {}
-
-  ngOnInit() {
-    this.alumnoFormGroup = this._formBuilder.group({
+  constructor(private _formBuilder: FormBuilder) {
+    this.planFormGroup = this._formBuilder.group({
       alumno_id: ['', Validators.required],
       objetivos: ['', Validators.required],
       sesiones: new FormArray([])
-    
     });
-    
-    this.sesionFormGroup = this._formBuilder.group({
-      nombre: ['', Validators.required],
-      descripcion: ['', Validators.required],
-      bloques: new FormArray([])
-    });
+    this.addSesion();
+    this.addSesion();
 
-    this.bloquesFormGroup.push(this._formBuilder.group({
-      nombre: ['', Validators.required],
-      ejerciciosEnPlan: new FormArray([])
-    }));
-
-    this.misSesiones.push(this._formBuilder.group({
-      nombre: ['', Validators.required],
-      descripcion: ['', Validators.required],
-      bloques: new FormArray([])
-    }));
-    this.misSesiones.push(this._formBuilder.group({
-      nombre: ['', Validators.required],
-      descripcion: ['', Validators.required],
-      bloques: new FormArray([])
-    }));
-    
-    this.formPlan.push(this.alumnoFormGroup);
-    //this.formPlan.push(this.sesionesForm);
   }
 
-  get sesionForm() { return this.sesionFormGroup.controls; }
-  get bloquesFormGroup() { return this.sesionForm.bloques as FormArray; }
+  ngOnInit() {
+    /*this.planFormGroup = this._formBuilder.group({
+      alumno_id: ['', Validators.required],
+      objetivos: ['', Validators.required],
+      sesiones: new FormArray([])
+    });*/
+    
+    /*this.sesionFormGroup = this._formBuilder.group({
+      nombre: ['', Validators.required],
+      descripcion: ['', Validators.required],
+      bloques: new FormArray([])
+    });*/
 
-  get misSesiones() { return this.sesionesForm as FormArray;}
+    /*this.bloquesFormGroup.push(this._formBuilder.group({
+      nombre: ['', Validators.required],
+      ejerciciosEnPlan: new FormArray([])
+    }));*/
+
+    /*this.sesiones.push(this._formBuilder.group({
+      nombre: ['', Validators.required],
+      descripcion: ['', Validators.required],
+      bloques: new FormArray([])
+    }));
+    this.sesiones.push(this._formBuilder.group({
+      nombre: ['', Validators.required],
+      descripcion: ['', Validators.required],
+      bloques: new FormArray([])
+    }));*/
+    
+    //this.formPlan.push(this.planFormGroup);
+    //////this.formPlan.push(this.sesionesForm);
+  }
+
+  //get sesionForm() { return this.sesionFormGroup.controls; }
+  //get bloquesFormGroup() { return this.sesionForm.bloques as FormArray; }
+
+  //get sesiones() { return this.sesionesForm as FormArray;}
+
+  get sesiones(){ return this.planFormGroup.get('sesiones') as FormArray;}
+
+  ver(): any {
+      console.log('se tiene cant sesiones creados: '+ (this.getCantSesiones()).length);
+      return this.sesiones.controls;
+  }
+  addSesion() {
+    const sesionNuevo = this._formBuilder.group({
+      nombre: ['', Validators.required],
+      descripcion: ['', Validators.required],
+      bloques: new FormArray([])
+    });
+    this.sesiones.push(sesionNuevo);
+    console.log('guarde sesion nueva');
+  }
+
+  getSesion(i): any{
+    console.log('se obtiene sesion nro: '+ i);
+    //return (this.planFormGroup.get('sesiones')[i]);
+    //return this.sesiones.at(i);
+    var vector = this.planFormGroup.get('sesiones') as FormArray;
+    return (vector.at(i));
+
+  }
+
+  misesion(): any{
+    var sesion = this.getSesion(this.cant);
+    this.cant++;
+    console.log('cant: '+this.cant);
+    return sesion;
+  }
+
+  get sesion(){
+    console.log('cant sesion: '+this.cantS);
+    return this.getSesion(this.cantS);
+  }
+
+  
+  set cantS(nro : number) {
+    this.cantS = nro;
+  }
+  
 
   actualizarSesiones(){
-    if(this.alumnoFormGroup.value['alumno_id'] != '')
-      if(this.alumnos.find(alu => alu.id === this.alumnoFormGroup.value['alumno_id']).categoria_plan > 2){
-        this.misSesiones.push(this._formBuilder.group({
+    if(this.planFormGroup.value['alumno_id'] != '')
+      if(this.alumnos.find(alu => alu.id === this.planFormGroup.value['alumno_id']).categoria_plan > 2){
+        this.sesiones.push(this._formBuilder.group({
           nombre: ['', Validators.required],
           descripcion: ['', Validators.required],
           bloques: new FormArray([])
         }));
       }
-    console.log('sesiones totales: '+ this.misSesiones.length);
+    console.log('sesiones totales: '+ this.sesiones.length);
   }
 
   verSesionesActuales(): any{
     //(click)="actualizarSesiones()
-    if(this.alumnoFormGroup.value['alumno_id'] != '')
-      if(this.alumnos.find(alu => alu.id === this.alumnoFormGroup.value['alumno_id']).categoria_plan > 2){
-        this.misSesiones.push(this._formBuilder.group({
-          nombre: ['', Validators.required],
-          descripcion: ['', Validators.required],
-          bloques: new FormArray([])
-        }));
+    if(this.planFormGroup.value['alumno_id'] != '')
+      if(this.alumnos.find(alu => alu.id === this.planFormGroup.value['alumno_id']).categoria_plan > 2){
+        if(this.sesiones.length == 2)
+          this.sesiones.push(this._formBuilder.group({
+            nombre: ['', Validators.required],
+            descripcion: ['', Validators.required],
+            bloques: new FormArray([])
+          }));
       }
-    console.log('sesiones totales: '+ this.misSesiones.length);
-    return this.misSesiones.controls;
+    console.log('sesiones totales: '+ this.sesiones.length);
+    return this.sesiones.controls;
   }
 
   getCantSesiones(): any{
-    if(this.alumnoFormGroup.value['alumno_id'] != '')
-      if(this.alumnos.find(alu => alu.id === this.alumnoFormGroup.value['alumno_id']).categoria_plan > 2){
-        this.misSesiones.push(this._formBuilder.group({
+    if(this.planFormGroup.value['alumno_id'] != '')
+      if(this.alumnos.find(alu => alu.id === this.planFormGroup.value['alumno_id']).categoria_plan > 2){
+        /*this.sesiones.push(this._formBuilder.group({
           nombre: ['', Validators.required],
           descripcion: ['', Validators.required],
           bloques: new FormArray([])
         }));
-        
-        //console.log('sesiones form len plan3: '+);
+        */
+       this.addSesion();
         return [1 , 2, 3];
       }
-    console.log('sesiones form len plan2: '+this.misSesiones.controls.values.length);
     return [1, 2];
   }
 
   getSesionForm(nro): any {
     console.log('se pide la sesion nro: '+nro);
-    console.log(' con campos:'+JSON.stringify((this.misSesiones.controls[nro - 1].value)));
-    return this.misSesiones.controls[nro - 1];
+    console.log(' con campos:'+JSON.stringify((this.sesiones.controls[nro - 1].value)));
+    return this.sesiones.controls[nro - 1];
   }
 
-  verInfoSesion(nro){
+  /*verInfoSesion(nro){
     //console.log('sesion '+i+' :'+ JSON.stringify(this.sesionFormGroup.value));
     this.sesiones.push(this.sesionFormGroup.value);
     console.log('sesion '+nro+' :'+ JSON.stringify(this.sesiones));
@@ -136,10 +188,10 @@ export class AltaPlanComponent implements OnInit {
 
     console.log('len bloques despues: '+ this.bloquesFormGroup.length);
 
-  }
+  }*/
 
   verSesion(nro){
-    console.log('sesion nro '+nro+' datos: '+JSON.stringify(this.sesionesForm.value));
+    //console.log('sesion nro '+nro+' datos: '+JSON.stringify(this.sesionesForm.value));
   }
 
   addBloque() {
@@ -147,10 +199,10 @@ export class AltaPlanComponent implements OnInit {
     //this.sesionFormGroup.add (nombreBloque2: ['', Validators.required]); 
     //this.bloques.push(this.cant_bloques);
 
-    this.bloquesFormGroup.push(this._formBuilder.group({
+    /*this.bloquesFormGroup.push(this._formBuilder.group({
       nombre: ['', Validators.required],
       ejerciciosEnPlan: new FormArray([])
-    }));
+    }));*/
   }
 
   getBloquesInfo(){
@@ -161,12 +213,12 @@ export class AltaPlanComponent implements OnInit {
   }
 
   guardar(){
-    console.log(JSON.stringify(this.alumnoFormGroup.value));
+    console.log(JSON.stringify(this.planFormGroup.value));
   }
 
   guardarDatos(){
-    console.log(JSON.stringify(this.formPlan.value));
+    //console.log(JSON.stringify(this.formPlan.value));
 
-    console.log(JSON.stringify('sesiones: '+this.sesionesForm.value))
+    ////console.log(JSON.stringify('sesiones: '+this.sesionesForm.value))
   }
 }
