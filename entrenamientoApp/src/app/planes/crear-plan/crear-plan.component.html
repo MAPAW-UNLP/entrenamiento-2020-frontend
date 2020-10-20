@@ -18,7 +18,7 @@
 
 <form  [formGroup]="planFormGroup" (ngSubmit)="guardarDatos()">
   <mat-horizontal-stepper linear #stepper>
-    <mat-step [completed]="estaAlumno()" [editable]="isEditable">
+    <mat-step [completed]="estaParte1()" [editable]="isEditable">
     <form [formGroup]="planFormGroup">     
      <ng-template matStepLabel>Asignar un alumno/a</ng-template>
      <mat-form-field>
@@ -54,6 +54,24 @@
         </textarea>
       </mat-form-field>
       <br>
+      <div formArrayName="bloques">
+        <h3>Bloques de Ejercicios</h3>
+          <div *ngFor="let bloque of sesion.get('bloques').controls; let nroBloque = index">
+            <h5>Bloque Nro. {{nroBloque + 1}}</h5>
+            <!--button mat-stroked-button color="warn" (click)="deleteBloqueForm(nroBloque, nroSesion)">Eliminar</button--> 
+            <br>
+            <form [formGroupName]="nroBloque" class="form-row">
+              <br>
+              <mat-form-field>
+                <mat-label>Nombre</mat-label>
+                <input matInput formControlName="nombre" placeholder="Por ejemplo, Bloque Fuerza-Resistencia." required>
+              </mat-form-field>
+            </form>  
+            <mat-divider></mat-divider>
+            <br>
+          </div>
+        <button mat-stroked-button (click)="addBloqueForm(sesion.controls.bloques)">Nuevo bloque</button> 
+      </div>
       <div>
         <button mat-button matStepperPrevious>Atrás</button>
         <button mat-button matStepperNext>Siguiente</button>

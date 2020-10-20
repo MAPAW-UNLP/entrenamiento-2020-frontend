@@ -33,7 +33,7 @@ export class CrearPlanComponent implements OnInit, AfterViewInit {
     });
    }
   ngAfterViewInit(): void {
-    this.planFormGroup.get('alumno_id').valueChanges.subscribe(  // antes valueChanges
+    this.planFormGroup.get('alumno_id').valueChanges.subscribe(  
       data => {
         var plan = this.getPlanAlumno(data);
         console.log('alu con id:'+data+' tiene plan: '+ plan);
@@ -63,34 +63,7 @@ export class CrearPlanComponent implements OnInit, AfterViewInit {
 
   get sesiones(){ return this.planFormGroup.get('sesiones') as FormArray;}
 
-  getSesionesControls(): any {
-    if(this.planFormGroup.value['alumno_id'] != ''){
-      if(this.alumnos.find(alu => alu.id === this.planFormGroup.value['alumno_id']).categoria_plan == 3){
-        if (this.cantidad == 2) {
-          console.log('plan 2 --> plan 3');
-          this.cantidad++; 
-          this.addSesionForm();
-        }
-        else{          console.log('plan 3 --> plan 3');      }
-      }
-      else{
-        if (this.cantidad == 3) {
-          console.log('plan 3 --> plan 2');
-          this.cantidad--; 
-          this.deleteSesionForm(this.cantidad);
-        }
-        else{
-          console.log('plan 2 --> plan 2');
-        }
-      }
-    }  
-    return this.sesiones.controls;  
-  }
-
   private getPlanAlumno(id: number): any{
-    /*if(this.planFormGroup.value['alumno_id'] != '')
-      return this.alumnos.find(alu => alu.id === id).categoria_plan;
-    return 0;*/
     return this.alumnos.find(alu => alu.id === id).categoria_plan;
   }
 
@@ -108,12 +81,34 @@ export class CrearPlanComponent implements OnInit, AfterViewInit {
     return this._formBuilder.group({
       nombre: ['', Validators.required],
       descripcion: ['', Validators.required],
-      //bloques: new FormArray([])
+      bloques: this._formBuilder.array([])
     });
   }
 
-  estaAlumno(){
+  estaParte1(){
     return ((this.planFormGroup.value['alumno_id'] != '') && (this.planFormGroup.value['objetivos'] != ''));
+  }
+
+  getBloques(nroSesion): any{
+    return this.sesiones.at(nroSesion).get('bloques') as FormArray;
+  }
+
+  deleteBloqueForm(nroBloque, nroSesion){
+    console.log('delete bloque nro: '+nroBloque+' de la sesion: '+nroSesion);
+    this.getBloques(nroSesion).removeAt(nroBloque);
+  }
+
+  addBloqueForm(bloques){
+    console.log('add bloque nueva');
+    //this.getBloques(nroSesion).push(this.crearFormBloque());
+    bloques.push(this.crearFormBloque());
+  }
+
+  crearFormBloque(): FormGroup{
+    return this._formBuilder.group({
+      nombre: ['', Validators.required],
+      //ejercicios: this._formBuilder.array([])
+    });
   }
   
   guardarDatos(){
