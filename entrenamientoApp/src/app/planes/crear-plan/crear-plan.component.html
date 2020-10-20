@@ -1,0 +1,74 @@
+<mat-toolbar>
+   
+    <mat-toolbar-row>
+        <nav class="navbar">
+            <span><a routerLinkActive='active' class="navbar-brand" href=""></a>INICIO</span>
+            
+            <span><a routerLinkActive='active' class="navbar-brand" href="">MIS ALUMNOS </a></span>
+            <span><a routerLinkActive='active' class="navbar-brand" href="">MIS PLANES DE ENTRENAMIENTO </a></span>
+            <span class="example-spacer"></span>
+            <span><a routerLinkActive='active' class="navbar-brand" href="">Usuario </a></span>
+            <span><a routerLinkActive='active' class="navbar-brand" href="">Cerrar sesión </a></span>
+        </nav>
+    </mat-toolbar-row>
+    <mat-toolbar-row id="info">
+        <h4>SEPAV > Plan de entrenamiento</h4>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+<form  [formGroup]="planFormGroup" (ngSubmit)="guardarDatos()">
+  <mat-horizontal-stepper linear #stepper>
+    <mat-step [completed]="estaAlumno()" [editable]="isEditable">
+    <form [formGroup]="planFormGroup">     
+     <ng-template matStepLabel>Asignar un alumno/a</ng-template>
+     <mat-form-field>
+       <mat-label>Seleccione un alumno de la lista</mat-label>
+       <mat-select formControlName="alumno_id" required>
+         <mat-option *ngFor="let alumno of alumnos" [value]="alumno.id">{{alumno.nombre}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <mat-label>Objetivos</mat-label>
+        <textarea matInput formControlName="objetivos" placeholder="Describir metas a cumplir." required>            
+        </textarea>
+      </mat-form-field>
+      <br>
+      <div>
+        <button mat-button matStepperNext >Siguiente</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step [stepControl]="sesion"  formArrayName="sesiones" [editable]="isEditable" *ngFor="let sesion of sesiones.controls; let nroSesion = index">     
+    <form [formGroupName]="nroSesion">
+      <ng-template matStepLabel>Definir sesion #{{nroSesion + 1}}</ng-template>
+      <mat-form-field>
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="nombre" placeholder="Por ejemplo, un día de la semana." required>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <mat-label>Descripción</mat-label>
+        <textarea matInput formControlName="descripcion" placeholder="Describir objetivos de la sesión." required>            
+        </textarea>
+      </mat-form-field>
+      <br>
+      <div>
+        <button mat-button matStepperPrevious>Atrás</button>
+        <button mat-button matStepperNext>Siguiente</button>
+      </div>
+    </form>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>Finalizar plan</ng-template>
+    <p>You are now done.</p>
+    <div>
+      <button mat-button matStepperPrevious>Atrás</button>
+      <button mat-button type="submit">Finalizar</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>
+
+</form>

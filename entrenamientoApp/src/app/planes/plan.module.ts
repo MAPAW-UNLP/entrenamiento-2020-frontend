@@ -7,15 +7,18 @@ import { AltaPlanComponent } from './alta-plan/alta-plan.component';
 //estilos
 import { StyleFormSharedModule } from '../style-form-shared/style-form-shared.module';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import {MatStepperModule} from '@angular/material/stepper'; 
+import {MatStepperModule} from '@angular/material/stepper';
+import { CrearPlanComponent } from './crear-plan/crear-plan.component'; 
 
 const routes: Routes = [
-  {path: 'planes/alta-plan', component: AltaPlanComponent}
+  {path: 'planes/alta-plan', component: AltaPlanComponent},
+  {path: 'planes/alta-plan-2', component: CrearPlanComponent}
 ];
 
 @NgModule({
   declarations: [
-    AltaPlanComponent
+    AltaPlanComponent,
+    CrearPlanComponent
   ],
   imports: [
     CommonModule,
