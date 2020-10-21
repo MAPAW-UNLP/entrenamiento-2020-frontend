@@ -19,15 +19,22 @@
 <form  [formGroup]="planFormGroup" (ngSubmit)="guardarDatos()">
   <mat-horizontal-stepper linear #stepper>
     <mat-step [completed]="estaParte1()" [editable]="isEditable">
-    <form [formGroup]="planFormGroup">     
+    <form [formGroup]="planFormGroup" class="form-stepper">     
      <ng-template matStepLabel>Asignar un alumno/a</ng-template>
      <mat-form-field>
        <mat-label>Seleccione un alumno de la lista</mat-label>
-       <mat-select formControlName="alumno_id" required>
+       <mat-select formControlName="alumno_id" required name="alu">
          <mat-option *ngFor="let alumno of alumnos" [value]="alumno.id">{{alumno.nombre}}</mat-option>
         </mat-select>
       </mat-form-field>
       <br>
+      <fieldset *ngIf="verInfoAlumno">
+        <legend>Historial clínico del alumno</legend>
+        <div class='row'>
+          <p>{{historial}}</p>
+        </div>      
+      </fieldset>
+      <br><br>
       <mat-form-field>
         <mat-label>Objetivos</mat-label>
         <textarea matInput formControlName="objetivos" placeholder="Describir metas a cumplir." required>            
@@ -41,7 +48,7 @@
   </mat-step>
 
   <mat-step [stepControl]="sesion"  formArrayName="sesiones" [editable]="isEditable" *ngFor="let sesion of sesiones.controls; let nroSesion = index">     
-    <form [formGroupName]="nroSesion">
+    <form [formGroupName]="nroSesion" class="form-stepper">
       <ng-template matStepLabel>Definir sesion #{{nroSesion + 1}}</ng-template>
       <mat-form-field>
         <mat-label>Nombre</mat-label>
@@ -60,12 +67,72 @@
             <h5>Bloque Nro. {{nroBloque + 1}}</h5>
             <!--button mat-stroked-button color="warn" (click)="deleteBloqueForm(nroBloque, nroSesion)">Eliminar</button--> 
             <br>
-            <form [formGroupName]="nroBloque" class="form-row">
-              <br>
+            <form [formGroupName]="nroBloque" class="form-stepper">
               <mat-form-field>
                 <mat-label>Nombre</mat-label>
                 <input matInput formControlName="nombre" placeholder="Por ejemplo, Bloque Fuerza-Resistencia." required>
               </mat-form-field>
+              <br>
+              
+              <div formArrayName="ejercicios">
+                <h4>Ejercicios</h4>
+                  
+                  <div *ngFor="let ejercicio of bloque.get('ejercicios').controls; let nroEjerc = index">
+                    <fieldset>
+                      <legend>Ejercicio #{{nroEjerc + 1}}</legend>
+                      <form [formGroupName]="nroEjerc" class="form-stepper">
+                        <mat-form-field>
+                          <mat-label>Seleccione un ejercicio de la lista</mat-label>
+                          <mat-select formControlName="tipoDeEjercicio_id" required>
+                            <mat-option *ngFor="let ejerc of tiposEjercicios" [value]="ejerc.id">{{ejerc.nombre}}</mat-option>
+                           </mat-select>
+                        </mat-form-field>
+                        <div *ngIf="tipoDeEjercicio_id != 0">
+                          <mat-form-field>
+                            <mat-label>Descripción</mat-label>
+                            <input matInput readonly value="getDescEjerc(tipoDeEjercicio_id)">
+                          </mat-form-field>
+                          <br>
+                          <mat-form-field>
+                            <mat-label>Zona muscular</mat-label>
+                            <input matInput readonly value="ejercSelected.zona_muscular">
+                          </mat-form-field>
+                          <br>
+                          <mat-form-field>
+                            <mat-label>Repetir por serie</mat-label>
+                            <input matInput readonly value="ejercSelected.cantidad_x_serie ejercSelected.tipoDeEjercicio_id">
+                          </mat-form-field>
+                          <br>
+                          <mat-form-field>
+                            <mat-label>Cantidad de series</mat-label>
+                            <input matInput type="number" formControlName="cant_series" required>
+                          </mat-form-field>
+                          <br>
+                          <mat-form-field>
+                            <mat-label>Equipamiento</mat-label>
+                            <input matInput formControlName="equipamiento" required>
+                          </mat-form-field>
+                          <br>
+                          <mat-form-field>
+                            <mat-label>Seleccione el nivel de dificultad</mat-label>
+                            <mat-select formControlName="dificultad" required>
+                              <mat-option *ngFor="let dificultad of nivelDificultad" [value]="dificultad">
+                                {{dificultad}}</mat-option>
+                             </mat-select>
+                          </mat-form-field>
+                          
+                        </div>
+                      </form>  
+                      <br>      
+                    </fieldset>
+
+                    <!--h5>Ejercicio #{{nroEjerc + 1}}</h5-->
+                    <!--button mat-stroked-button color="warn" (click)="deleteBloqueForm(nroBloque, nroSesion)">Eliminar</button--> 
+                    
+                  </div>
+                <button mat-stroked-button (click)="addEjercicioForm(bloque.controls.ejercicios)">Nuevo ejercicio</button> 
+              </div>
+
             </form>  
             <mat-divider></mat-divider>
             <br>

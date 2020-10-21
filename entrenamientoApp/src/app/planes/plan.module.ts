@@ -10,6 +10,7 @@ import { StyleFormSharedModule } from '../style-form-shared/style-form-shared.mo
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatDividerModule} from '@angular/material/divider'; 
+import {MatAutocompleteModule} from '@angular/material/autocomplete'; 
 
 const routes: Routes = [
   {path: 'planes/alta-plan', component: AltaPlanComponent},
@@ -27,7 +28,8 @@ const routes: Routes = [
     StyleFormSharedModule,
     MatToolbarModule,
     MatStepperModule,
-    MatDividerModule
+    MatDividerModule,
+    MatAutocompleteModule
   ],
   exports:[
     RouterModule
